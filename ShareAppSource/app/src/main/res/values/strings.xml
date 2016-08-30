@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">ShareApp</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- Strings used in app ui-->
+    <string name="hello">Hello %s!</string>
+    <string name="login_instructions">Login to twiter</string>
+    <string name="share_instructions">Enter your Tweet message</string>
+    <string name="btn_login">Login to Twitter</string>
+    <string name="btn_share">Tweet</string>
+
+    <!-- Twitter Configurations -->
+    <string name="twitter_callback">obb</string>
+    <string name="twitter_consumer_key">ipQtUJZfR7wcWNUeKuIFZOKqE</string>
+    <string name="twitter_consumer_secret">fay9y4Jw9dubDi7fagRa9A8Sx00MwKNENfTf563YbwxxZqoLff</string>
+    <string name="twitter_oauth_verifier">oauth_verifier</string>
+
+    <!-- Uber Configurations -->
+    <string name="uber_btn_login">Login to Uber</string>
+    <string name="uber_client_id">HK-jSjntRSeYWHc1rs6I0qVHv0HFT5fK</string>
+    <string name="uber_redirect_uri">http://localhost</string>
+    <string name="uber_server_token">eaYSu4GOGtMxnvFpyhwSM04Vnk6IOFl7h8Uh4Whm</string>
+    <string name="copy_access_token_to_clipboard">Copy Access Token to Clipboard</string>
+    <string name="clear_access_token">Clear Access Token</string>
+    <string name="user_cancels_message">User cancels login</string>
+    <string name="login_error_message">Error occured during login: %s</string>
+    <string name="custom_login_text">I want to sign in using my Uber app.</string>
+    <string name="authorization_code_message">Received an authorization code:\n %s</string>
+    <string name="greeting">Hello %s!</string>
+    <string name="source">Enter pickup location</string>
+    <string name="destination">Enter destination location</string>
+    <string name="search">Search cabs</string>
+
+    <!-- GMAIL Configurations-->
+    <string name="loading">Loading…</string>
+    <string name="signed_in_fmt">Signed in as: %s</string>
+    <string name="btn_sendMail">Send Mail</string>
+    <string name="gmail_body">Body</string>
+    <string name="gmail_subject">Subject</string>
+    <string name="gmail_source">To Address</string>
+    <string name="gmail_from_email">From Address</string>
+</resources>

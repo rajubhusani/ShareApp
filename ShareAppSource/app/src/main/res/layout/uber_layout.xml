@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:uber="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_vertical_margin">
+
+    <RelativeLayout
+        android:id="@+id/login_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:visibility="visible" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/login_instructions"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#0080B4"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/custom_uber_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@color/uber_black"
+            android:text="@string/uber_btn_login"
+            android:textColor="#fff" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ride_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:text="@string/hello"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#0080B4" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/source"
+            android:id="@+id/uber_source"
+            >
+        <EditText
+            android:id="@+id/uber_Editsource"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/destination"
+            android:id="@+id/uber_dest">
+            <EditText
+                android:id="@+id/uber_editdest"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                />
+            </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/uber_search_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/uber_black"
+            android:text="@string/search"
+            android:textColor="#fff" android:visibility="gone"/>
+        <com.uber.sdk.android.rides.RideRequestButton
+            android:id="@+id/uber_request_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            uber:ub__style="black" />
+
+    </LinearLayout>
+</LinearLayout>

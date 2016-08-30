@@ -1,0 +1,28 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'distribution'
+apply plugin: 'net.researchgate.release'
+apply plugin: 'co.riiid.gradle'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'net.researchgate:gradle-release:2.3.5'
+        classpath 'co.riiid:gradle-github-plugin:0.4.2'
+        classpath 'net.saliman:gradle-cobertura-plugin:2.3.1'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

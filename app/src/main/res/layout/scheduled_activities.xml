@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="40dp">
+    android:paddingTop="50dp">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/cardList"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/noContent"
-        android:text="No Messages"
-        android:visibility="gone"
-        android:textColor="@color/uber_black"
-        android:layout_centerInParent="true"/>
+        <android.support.design.widget.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:id="@+id/tabs"
+            app:tabGravity="fill"
+            app:tabTextColor="@color/place_autocomplete_search_hint"
+            app:tabSelectedTextColor="@color/uber_white"
+            android:background="?attr/colorPrimary"/>
+
+    </android.support.v4.view.ViewPager>
 
 </RelativeLayout>

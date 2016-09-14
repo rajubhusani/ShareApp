@@ -17,77 +17,75 @@ import java.util.List;
 
 import shareapp.vsshv.com.shareapp.R;
 import shareapp.vsshv.com.shareapp.database.DataBaseDao;
-import shareapp.vsshv.com.shareapp.datasets.TwitterSet;
+import shareapp.vsshv.com.shareapp.datasets.UberDataSet;
 import shareapp.vsshv.com.shareapp.utils.Utility;
 
 /**
- * Created by PC414506 on 31/08/16.
+ * Created by PC414506 on 12/09/16.
  */
 
-public class TwitterAdapter extends RecyclerView.Adapter<TwitterAdapter.ViewHolder> {
-    private List<TwitterSet> mDataset;
-
-    private String user = "";
+public class UberAdapter extends RecyclerView.Adapter<UberAdapter.ViewHolder> {
+    private List<UberDataSet> mDataset;
+    String user = "";
     DataBaseDao dao = null;
     Context ctx;
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        private TextView mTextView;
+        private TextView mTextPView;
+        private TextView mTextDView;
         private TextView mDate;
+        private Button edit;
+        private Button delete;
         private LinearLayout topbar;
         private ImageView image;
         private TextView userName;
-        private Button edit;
-        private Button delete;
         private ViewHolder(View v) {
             super(v);
-            mTextView = (TextView) v.findViewById(R.id.txtName);
+            mTextPView = (TextView) v.findViewById(R.id.pName);
+            mTextDView = (TextView) v.findViewById(R.id.dName);
+            edit = (Button)v.findViewById(R.id.edit);
+            delete = (Button)v.findViewById(R.id.delete);
             mDate = (TextView) v.findViewById(R.id.txtDate);
             topbar = (LinearLayout) v.findViewById(R.id.topbar);
             image = (ImageView) v.findViewById(R.id.image);
             userName = (TextView) v.findViewById(R.id.userName);
-            edit = (Button)v.findViewById(R.id.edit);
-            delete = (Button)v.findViewById(R.id.delete);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public TwitterAdapter(List<TwitterSet> myDataset, Context ctx) {
+    public UberAdapter(List<UberDataSet> myDataset, Context ctx) {
         mDataset = myDataset;
         SharedPreferences settings = ctx.getSharedPreferences("ShareApp",Context.MODE_PRIVATE);
-        user = settings.getString("twitter_user_name", "");
+        user = settings.getString("ub_account", "");
         dao = new DataBaseDao(ctx);
         this.ctx = ctx;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public TwitterAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+    public UberAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                        int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_list_item, parent, false);
+                .inflate(R.layout.uber_card_list, parent, false);
         // set the view's size, margins, paddings and layout parameters
 
-        return new TwitterAdapter.ViewHolder(v);
+        return new UberAdapter.ViewHolder(v);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(UberAdapter.ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final TwitterSet set = mDataset.get(position);
-        if(set.getStatus() == 1){
-            holder.edit.setVisibility(View.GONE);
-        }
-        Log.d("","======"+set.getMessage());
+        final UberDataSet set = mDataset.get(position);
+       // Log.d("","======"+set.getMessage());
         Log.d("","======"+set.getScheduled());
         holder.userName.setText(user);
-        holder.mTextView.setText(set.getMessage());
+        holder.mTextDView.setText(set.getDropOffNick());
+        holder.mTextPView.setText(set.getPickUpNick());
         holder.mDate.setText(set.getScheduled());
-
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,11 +98,11 @@ public class TwitterAdapter extends RecyclerView.Adapter<TwitterAdapter.ViewHold
                 if(set.getStatus() == 0){
                     Utility.getInstance(ctx).cancelScheduledAlarm(ctx, set.get_id());
                 }
-                long row = dao.removeTMessage(set.get_id());
+                long row = dao.removeUMessage(set.get_id());
                 if(row > 0){
+                    Snackbar.make(view, "Uber Ride deleted successfully", Snackbar.LENGTH_SHORT).show();
                     mDataset.remove(position);
                     notifyDataSetChanged();
-                    Snackbar.make(view, "Message deleted successfully", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });

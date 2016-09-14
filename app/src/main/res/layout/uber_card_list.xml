@@ -10,25 +10,23 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/fbutton_default_color"
+            android:background="@color/uber_black"
             android:id="@+id/topbar"
-            android:padding="5dp">
+            android:padding="10dp">
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/twitter_badge"/>
+                android:src="@drawable/uber_badge"/>
             <TextView
                 android:id="@+id/userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Twitter \n rajubhusani"
+                android:text="Uber \n rajubhusani"
                 android:textColor="@color/uber_white"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
@@ -37,15 +35,25 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/txtName"
+            android:id="@+id/pName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name"
-            android:gravity="center_vertical"
+            android:text="Source"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/fbutton_default_color"
             android:layout_below="@id/topbar"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:id="@+id/dName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dest"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/fbutton_default_color"
+            android:layout_below="@id/pName"
             android:layout_margin="5dp"/>
 
         <TextView
@@ -54,35 +62,35 @@
             android:layout_height="wrap_content"
             android:text="Date"
             android:textSize="13sp"
-            android:layout_below="@id/txtName"
+            android:textColor="@color/uber_black"
+            android:layout_below="@id/dName"
             android:layout_margin="5dp"/>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/txtDate"
             android:background="@color/fbutton_color_gray">
 
-            <Button
-                android:id="@+id/edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:text="Edit"
-                android:textSize="14sp"
-                android:textColor="@color/uber_black"
-                android:clickable="true"/>
+        <Button
+            android:id="@+id/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="Edit"
+            android:textSize="14sp"
+            android:textColor="@color/uber_black"
+            android:clickable="true"/>
 
-            <Button
-                android:id="@+id/delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:text="Delete"
-                android:textSize="14sp"
-                android:clickable="true"
-                android:textColor="@color/fbutton_color_wisteria"
-                android:layout_toRightOf="@id/edit"/>
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="Delete"
+            android:textSize="14sp"
+            android:clickable="true"
+            android:textColor="@color/fbutton_color_wisteria"
+            android:layout_toRightOf="@id/edit"/>
 
         </RelativeLayout>
 

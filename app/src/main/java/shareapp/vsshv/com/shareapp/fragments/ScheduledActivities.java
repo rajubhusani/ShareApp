@@ -1,33 +1,32 @@
 package shareapp.vsshv.com.shareapp.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import java.util.List;
 
 import shareapp.vsshv.com.shareapp.R;
-import shareapp.vsshv.com.shareapp.adapters.TwitterAdapter;
-import shareapp.vsshv.com.shareapp.database.DataBaseDao;
-import shareapp.vsshv.com.shareapp.datasets.TwitterSet;
 
 /**
  * Created by PC414506 on 31/08/16.
  */
 
-public class ScheduledActivities extends Fragment {
+public class ScheduledActivities extends Fragment{
 
-    private TwitterAdapter mList = null;
-    private RecyclerView recList = null;
-    private List<TwitterSet> arrayList = null;
-    private TextView noContent = null;
+    public static TabLayout tabLayout;
+    public static ViewPager viewPager;
+
+    private int[] tabIcons = {
+            R.drawable.twitterbg,
+            R.drawable.uber_badge,
+            R.drawable.gmailbg
+    };
 
     public static ScheduledActivities newInstance() {
         ScheduledActivities f = new ScheduledActivities();
@@ -40,33 +39,77 @@ public class ScheduledActivities extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.scheduled_activities, null);
 
-        recList = (RecyclerView) view.findViewById(R.id.cardList);
-        noContent = (TextView)view.findViewById(R.id.noContent);
-        recList.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this.getActivity());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recList.setLayoutManager(llm);
+        tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        viewPager = (ViewPager) view.findViewById(R.id.viewpager);
 
-        getActivities();
+        viewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
+
+        tabLayout.setupWithViewPager(viewPager);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         return view;
     }
 
-    private void getActivities(){
-        DataBaseDao dao = new DataBaseDao(getActivity());
-        arrayList = dao.getAllTMessages();
-        Log.d("","=====getActivities=");
-        if(arrayList != null && arrayList.size() > 0){
-            mList = new TwitterAdapter(arrayList, getActivity());
-            Log.d("","======"+arrayList.get(0).getMessage());
-            Log.d("","======"+arrayList.get(0).getScheduled());
-            recList.setAdapter(mList);
-            noContent.setVisibility(View.GONE);
-            recList.setVisibility(View.VISIBLE);
-        }else{
-            noContent.setVisibility(View.VISIBLE);
-            recList.setVisibility(View.GONE);
+    class MyAdapter extends FragmentPagerAdapter {
+
+        public MyAdapter(FragmentManager fm) {
+            super(fm);
         }
 
+        /**
+         * Return fragment with respect to Position .
+         */
+
+        @Override
+        public Fragment getItem(int position)
+        {
+            switch (position){
+                case 0 : return new TwitterFragment();
+                case 1 : return new UberFragment();
+                case 2 : return new GmailFragment();
+            }
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+
+            return tabIcons.length;
+
+        }
+
+        /**
+         * This method returns the title of the tab according to the position.
+         */
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            switch (position){
+                case 0 :
+                    return "Twitter";
+                case 1 :
+                    return "Uber";
+                case 2 :
+                    return "Gmail";
+            }
+            return null;
+        }
     }
 }

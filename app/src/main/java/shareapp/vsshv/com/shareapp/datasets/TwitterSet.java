@@ -12,6 +12,7 @@ public class TwitterSet {
     private String message;
     private String userEmail;
     private String scheduled;
+    private int status;
 
     public String getUserName() {
         return userName;
@@ -59,5 +60,13 @@ public class TwitterSet {
 
     public void set_id(int _id) {
         this._id = _id;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

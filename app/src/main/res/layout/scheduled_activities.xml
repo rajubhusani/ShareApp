@@ -4,23 +4,18 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="50dp">
-
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <android.support.design.widget.TabLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:id="@+id/tabs"
-            app:tabGravity="fill"
-            app:tabTextColor="@color/place_autocomplete_search_hint"
-            app:tabSelectedTextColor="@color/uber_white"
-            android:background="?attr/colorPrimary"/>
-
-    </android.support.v4.view.ViewPager>
-
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:id="@+id/tabs"
+        app:tabGravity="fill"
+        app:tabTextColor="@color/place_autocomplete_search_hint"
+        app:tabSelectedTextColor="@color/uber_white"
+        android:background="?attr/colorPrimary"/>
 </RelativeLayout>

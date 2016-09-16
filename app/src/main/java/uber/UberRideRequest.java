@@ -3,6 +3,7 @@ package uber;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -40,7 +41,11 @@ public class UberRideRequest extends AppCompatActivity{
 
         setContentView(R.layout.ride_request);
 
-        getActionBar().setTitle("Ride Request");
+        ActionBar actionBar = getSupportActionBar();
+
+        if(actionBar != null){
+            actionBar.setTitle("Ride Request");
+        }
 
         Bundle extras = getIntent().getExtras();
 

@@ -1,16 +1,21 @@
 package shareapp.vsshv.com.shareapp.utils;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -24,7 +29,11 @@ import java.util.Arrays;
 
 import javax.mail.MessagingException;
 
+import shareapp.vsshv.com.shareapp.R;
 import shareapp.vsshv.com.shareapp.database.DataBaseDao;
+import shareapp.vsshv.com.shareapp.gmail.GmailActivity;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 /**
  * Created by PC414506 on 06/09/16.
@@ -43,6 +52,11 @@ public class GmailSent extends AsyncTask<Void, Void, Void> {
     private static final String PREF_ACCOUNT_NAME = "accountName";
 
     private int unique;
+
+    private static final int
+            NOTIFICATION_SEND = 0,
+            NOTIFICATION_ERROR = 1,
+            NOTIFICATION_NEED_AUTHORIZE = 2;
 
     public GmailSent(Bundle args, Context ctx, int unique) {
         this.to = args.getString("to");
@@ -72,6 +86,11 @@ public class GmailSent extends AsyncTask<Void, Void, Void> {
             mLastError = ex;
             cancel(true);
             return null;
+        }catch (UserRecoverableAuthIOException e) {
+            showNotification(NOTIFICATION_NEED_AUTHORIZE);
+            mLastError = e;
+            cancel(true);
+            e.printStackTrace();
         }catch (IOException ex){
             ex.printStackTrace();
             mLastError = ex;
@@ -109,7 +128,42 @@ public class GmailSent extends AsyncTask<Void, Void, Void> {
            // Toast.makeText(ctx, R.string.sent_success, Toast.LENGTH_SHORT).show();
             DataBaseDao dao = new DataBaseDao(ctx);
             dao.updateGmailMessage(1, unique);
+        }else{
+            showNotification(NOTIFICATION_NEED_AUTHORIZE);
         }
+    }
+
+    private void showNotification(int notif_id) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx)
+                .setWhen(System.currentTimeMillis());
+
+        Intent intentContent = new Intent();
+        PendingIntent pendingContent;
+
+        switch (notif_id) {
+            case NOTIFICATION_NEED_AUTHORIZE:
+                intentContent.setClass(ctx, GmailActivity.class);
+                intentContent.setAction("Auth");
+                intentContent.putExtra("to", to);
+                intentContent.putExtra("subject", subject);
+                intentContent.putExtra("body", body);
+                intentContent.putExtra("unique", unique);
+                intentContent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                PendingIntent pendingAuthorize = PendingIntent.getActivity(
+                        ctx, 0, intentContent, PendingIntent.FLAG_CANCEL_CURRENT);
+                builder.setContentIntent(pendingAuthorize)
+                        .setAutoCancel(true)
+                        .setSmallIcon(android.R.drawable.stat_notify_error)
+                        .setTicker(ctx.getString(R.string.txt_error_sending))
+                        .setContentTitle(ctx.getString(R.string.txt_error_sending))
+                        .setContentText(ctx.getString(R.string.txt_need_authorize));
+                break;
+
+            default:
+                break;
+        }
+        ((NotificationManager)ctx.getSystemService(NOTIFICATION_SERVICE))
+                .notify(notif_id, builder.build());
     }
 
     /**
